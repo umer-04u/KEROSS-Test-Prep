@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Recruitment Prep Masterclass - Complete Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chosen Palette: "Academic Focus"
+         Background: Slate-50
+         Primary: Indigo-600
+         Secondary: Emerald-500
+         Accent: Amber-500
+         Text: Slate-800
+    -->
+
+    <!-- Application Structure Plan: 
+         1. Layout: Sidebar + Main Content (Responsive).
+         2. Day 1: Java Visualizers (Execution Flow, Access Modifiers) + Quiz.
+         3. Day 2: Aptitude Priority Chart + Formula Cheat Sheet.
+         4. Day 3: Web Basics Deep Dive (Box Model Viz, Tag Dictionary, JS Logic) + Trap Quiz.
+         5. Day 4: HR STAR Method Builder + Self Intro + Trap Handling.
+         6. Day 5: Final Strategy Checklists + Mental Anchors.
+    -->
+
+    <!-- Visualization & Content Choices:
+         - Day 3 Box Model: Used CSS borders/padding to visually teach the concept (Content > Padding > Border > Margin).
+         - Day 1 Execution Flow: Stepper UI to show .java -> .class -> JVM.
+         - Interactive Quizzes: Immediate feedback loops for active recall.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        height: 300px;
+        max-height: 400px;
+        margin: 0 auto;
+      }
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      .box-model-demo {
+        transition: all 0.3s;
+      }
+      .box-model-demo:hover {
+        transform: scale(1.02);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 font-sans h-screen flex overflow-hidden"
+  >
+    <!-- Sidebar -->
+    <aside
+      class="bg-white w-64 flex-shrink-0 border-r border-slate-200 hidden md:flex flex-col z-20 shadow-lg"
+    >
+      <div class="p-6 border-b border-slate-100 bg-indigo-700">
+        <h1 class="text-xl font-bold text-white tracking-wide">
+          Campus Prep
+          <span class="block text-indigo-200 text-sm font-normal"
+            >Complete Guide</span
+          >
+        </h1>
+      </div>
+      <nav class="flex-1 overflow-y-auto p-4 space-y-2">
+        <button
+          onclick="navTo('day1')"
+          class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition flex items-center justify-between group"
+          id="btn-day1"
+        >
+          <span class="font-medium">Day 1: Java Core</span>
+          <span
+            class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-indigo-500 transition-colors"
+          ></span>
+        </button>
+        <button
+          onclick="navTo('day2')"
+          class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition flex items-center justify-between group"
+          id="btn-day2"
+        >
+          <span class="font-medium">Day 2: Aptitude</span>
+          <span
+            class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-indigo-500 transition-colors"
+          ></span>
+        </button>
+        <button
+          onclick="navTo('day3')"
+          class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition flex items-center justify-between group"
+          id="btn-day3"
+        >
+          <span class="font-medium">Day 3: Web Basics</span>
+          <span
+            class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-indigo-500 transition-colors"
+          ></span>
+        </button>
+        <button
+          onclick="navTo('day4')"
+          class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition flex items-center justify-between group"
+          id="btn-day4"
+        >
+          <span class="font-medium">Day 4: HR & Comm</span>
+          <span
+            class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-indigo-500 transition-colors"
+          ></span>
+        </button>
+        <button
+          onclick="navTo('day5')"
+          class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-indigo-50 hover:text-indigo-700 transition flex items-center justify-between group"
+          id="btn-day5"
+        >
+          <span class="font-medium">Day 5: Final Strategy</span>
+          <span
+            class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-indigo-500 transition-colors"
+          ></span>
+        </button>
+      </nav>
+      <div
+        class="p-4 border-t border-slate-100 text-xs text-slate-400 text-center"
+      >
+        Updated for Umer & General Prep
+      </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden fixed top-0 w-full bg-indigo-700 z-30 flex items-center justify-between px-4 py-3 shadow-md"
+    >
+      <h1 class="text-white font-bold text-lg">Campus Prep Guide</h1>
+      <button
+        onclick="toggleMobileMenu()"
+        class="text-white focus:outline-none p-2"
+      >
+        <span class="text-2xl">☰</span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-slate-900 bg-opacity-95 z-40 hidden flex flex-col justify-center items-center space-y-6 backdrop-blur-sm"
+    >
+      <button
+        onclick="toggleMobileMenu()"
+        class="absolute top-6 right-6 text-white text-4xl hover:text-indigo-300"
+      >
+        &times;
+      </button>
+      <button
+        onclick="navTo('day1'); toggleMobileMenu()"
+        class="text-white text-2xl font-medium hover:text-indigo-300"
+      >
+        Day 1: Java Core
+      </button>
+      <button
+        onclick="navTo('day2'); toggleMobileMenu()"
+        class="text-white text-2xl font-medium hover:text-indigo-300"
+      >
+        Day 2: Aptitude
+      </button>
+      <button
+        onclick="navTo('day3'); toggleMobileMenu()"
+        class="text-white text-2xl font-medium hover:text-indigo-300"
+      >
+        Day 3: Web Basics
+      </button>
+      <button
+        onclick="navTo('day4'); toggleMobileMenu()"
+        class="text-white text-2xl font-medium hover:text-indigo-300"
+      >
+        Day 4: HR Round
+      </button>
+      <button
+        onclick="navTo('day5'); toggleMobileMenu()"
+        class="text-white text-2xl font-medium hover:text-indigo-300"
+      >
+        Day 5: Final Strategy
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <main
+      class="flex-1 overflow-y-auto pt-16 md:pt-0 bg-slate-50 relative scroll-smooth"
+      id="main-content"
+    >
+      <!-- Content Container -->
+      <div class="max-w-5xl mx-auto p-4 md:p-10 space-y-8 pb-32">
+        <!-- Welcome Screen (Default) -->
+        <div id="welcome-view" class="view-section text-center py-20 fade-in">
+          <div
+            class="inline-block p-4 rounded-full bg-indigo-100 text-indigo-600 mb-6 text-4xl"
+          >
+            🎓
+          </div>
+          <h2 class="text-4xl md:text-5xl font-extrabold text-indigo-900 mb-6">
+            Master Your Placement
+          </h2>
+          <p class="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            This comprehensive 5-day guide covers everything from Java
+            Architecture to high-stakes HR traps.
+            <br /><br />
+            <strong
+              >Select "Day 1" from the sidebar to begin your revision.</strong
+            >
+          </p>
+          <div
+            class="mt-12 grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto opacity-70"
+          >
+            <div class="p-4 border rounded-lg bg-white shadow-sm">☕ Java</div>
+            <div class="p-4 border rounded-lg bg-white shadow-sm">
+              🧮 Aptitude
+            </div>
+            <div class="p-4 border rounded-lg bg-white shadow-sm">🌐 Web</div>
+            <div class="p-4 border rounded-lg bg-white shadow-sm">🤝 HR</div>
+            <div class="p-4 border rounded-lg bg-white shadow-sm">
+              🚀 Strategy
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 1: Java Core -->
+        <div id="day1-view" class="view-section hidden fade-in space-y-8">
+          <div
+            class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8"
+          >
+            <div class="flex items-center space-x-3 mb-6">
+              <span
+                class="bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide"
+                >Day 1</span
+              >
+              <h2 class="text-3xl font-bold text-slate-800">
+                Java Core Basics
+              </h2>
+            </div>
+
+            <!-- Execution Flow Visualizer -->
+            <div
+              class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-8"
+            >
+              <h3 class="text-xl font-bold text-slate-800 mb-4">
+                Java Execution Flow (The "WORA" Process)
+              </h3>
+              <div
+                class="flex flex-col md:flex-row items-center justify-between gap-4 text-center"
+              >
+                <div
+                  class="flex-1 p-4 bg-white rounded shadow-sm border-t-4 border-indigo-500 w-full"
+                >
+                  <div class="font-mono text-xs text-slate-400 mb-1">
+                    Step 1
+                  </div>
+                  <div class="font-bold text-indigo-900">Source Code</div>
+                  <div class="text-xs bg-slate-100 p-1 mt-2 rounded font-mono">
+                    .java
+                  </div>
+                </div>
+                <div
+                  class="text-2xl text-slate-300 transform rotate-90 md:rotate-0"
+                >
+                  ➔
+                </div>
+                <div
+                  class="flex-1 p-4 bg-white rounded shadow-sm border-t-4 border-emerald-500 w-full"
+                >
+                  <div class="font-mono text-xs text-slate-400 mb-1">
+                    Step 2: Compiler
+                  </div>
+                  <div class="font-bold text-emerald-900">Bytecode</div>
+                  <div class="text-xs bg-slate-100 p-1 mt-2 rounded font-mono">
+                    .class
+                  </div>
+                  <div class="text-[10px] text-emerald-600 mt-1">
+                    Platform Independent
+                  </div>
+                </div>
+                <div
+                  class="text-2xl text-slate-300 transform rotate-90 md:rotate-0"
+                >
+                  ➔
+                </div>
+                <div
+                  class="flex-1 p-4 bg-white rounded shadow-sm border-t-4 border-amber-500 w-full"
+                >
+                  <div class="font-mono text-xs text-slate-400 mb-1">
+                    Step 3: Interpreter
+                  </div>
+                  <div class="font-bold text-amber-900">JVM</div>
+                  <div class="text-xs bg-slate-100 p-1 mt-2 rounded font-mono">
+                    Machine Code
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- OOP Concepts Cards -->
+            <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">
+              OOP Concepts: Real-World Analogies
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div
+                class="p-5 bg-indigo-50 rounded-lg border-l-4 border-indigo-600 hover:shadow-md transition"
+              >
+                <h4 class="font-bold text-indigo-900 flex justify-between">
+                  Encapsulation <span class="text-lg">💊</span>
+                </h4>
+                <p class="text-sm text-indigo-800 mt-2 font-medium">
+                  Analogy: A Medicine Capsule
+                </p>
+                <p class="text-xs text-slate-600 mt-1">
+                  You see the capsule, but the chemical formula is hidden
+                  inside. Wraps data and methods together.
+                </p>
+              </div>
+              <div
+                class="p-5 bg-emerald-50 rounded-lg border-l-4 border-emerald-600 hover:shadow-md transition"
+              >
+                <h4 class="font-bold text-emerald-900 flex justify-between">
+                  Inheritance <span class="text-lg">👪</span>
+                </h4>
+                <p class="text-sm text-emerald-800 mt-2 font-medium">
+                  Analogy: Genetics
+                </p>
+                <p class="text-xs text-slate-600 mt-1">
+                  A child inherits eye color from parents. Used for code
+                  reusability.
+                </p>
+              </div>
+              <div
+                class="p-5 bg-amber-50 rounded-lg border-l-4 border-amber-600 hover:shadow-md transition"
+              >
+                <h4 class="font-bold text-amber-900 flex justify-between">
+                  Polymorphism <span class="text-lg">🎭</span>
+                </h4>
+                <p class="text-sm text-amber-800 mt-2 font-medium">
+                  Analogy: A Person's Roles
+                </p>
+                <p class="text-xs text-slate-600 mt-1">
+                  One man is an employee at work, husband at home. One
+                  interface, many forms.
+                </p>
+              </div>
+              <div
+                class="p-5 bg-rose-50 rounded-lg border-l-4 border-rose-600 hover:shadow-md transition"
+              >
+                <h4 class="font-bold text-rose-900 flex justify-between">
+                  Abstraction <span class="text-lg">🚗</span>
+                </h4>
+                <p class="text-sm text-rose-800 mt-2 font-medium">
+                  Analogy: Driving a Car
+                </p>
+                <p class="text-xs text-slate-600 mt-1">
+                  You use the steering wheel but don't need to know engine
+                  combustion physics.
+                </p>
+              </div>
+            </div>
+
+            <!-- Access Modifiers Table -->
+            <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">
+              Access Modifiers (Visibility)
+            </h3>
+            <div class="overflow-hidden rounded-lg border border-slate-200">
+              <table class="w-full text-sm text-left text-slate-600">
+                <thead
+                  class="bg-slate-100 text-slate-800 font-bold uppercase text-xs"
+                >
+                  <tr>
+                    <th class="px-4 py-3">Modifier</th>
+                    <th class="px-4 py-3">Scope</th>
+                    <th class="px-4 py-3">Restriction</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 bg-white">
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3 font-mono font-bold text-red-600">
+                      private
+                    </td>
+                    <td class="px-4 py-3">Same Class ONLY</td>
+                    <td class="px-4 py-3">Most Restrictive 🔒</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3 font-mono font-bold text-amber-600">
+                      default
+                    </td>
+                    <td class="px-4 py-3">Same Package</td>
+                    <td class="px-4 py-3">Package Private</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3 font-mono font-bold text-blue-600">
+                      protected
+                    </td>
+                    <td class="px-4 py-3">Package + Subclasses</td>
+                    <td class="px-4 py-3">Inheritance Friendly</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="px-4 py-3 font-mono font-bold text-green-600">
+                      public
+                    </td>
+                    <td class="px-4 py-3">Everywhere</td>
+                    <td class="px-4 py-3">Least Restrictive 🔓</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Day 1 Quiz -->
+            <div
+              class="mt-8 bg-slate-50 p-6 rounded-lg border border-slate-200"
+            >
+              <h3
+                class="text-xl font-bold text-slate-800 mb-4 flex items-center"
+              >
+                📝 Day 1 Assessment
+                <span
+                  class="ml-2 text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded"
+                  >High Probability</span
+                >
+              </h3>
+              <div id="day1-quiz-container" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 2: Aptitude -->
+        <div id="day2-view" class="view-section hidden fade-in space-y-8">
+          <div
+            class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8"
+          >
+            <div class="flex items-center space-x-3 mb-6">
+              <span
+                class="bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide"
+                >Day 2</span
+              >
+              <h2 class="text-3xl font-bold text-slate-800">
+                General Aptitude
+              </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+              <!-- Chart -->
+              <div
+                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm"
+              >
+                <h3 class="text-lg font-bold text-slate-700 mb-2 text-center">
+                  Topic Priority
+                </h3>
+                <div class="chart-container" style="height: 250px">
+                  <canvas id="aptitudePriorityChart"></canvas>
+                </div>
+              </div>
+              <!-- Formula Cheat Sheet -->
+              <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                <h3
+                  class="text-lg font-bold text-indigo-800 mb-4 flex items-center"
+                >
+                  ⚡ Formula Cheat Sheet
+                </h3>
+                <div class="space-y-3">
+                  <div
+                    class="bg-white p-3 rounded border border-slate-200 shadow-sm"
+                  >
+                    <div
+                      class="text-xs font-bold text-slate-400 uppercase tracking-wider"
+                    >
+                      Percentages
+                    </div>
+                    <div class="font-mono text-sm text-indigo-600 mt-1">
+                      1/6 = 16.66% | 1/8 = 12.5%
+                    </div>
+                  </div>
+                  <div
+                    class="bg-white p-3 rounded border border-slate-200 shadow-sm"
+                  >
+                    <div
+                      class="text-xs font-bold text-slate-400 uppercase tracking-wider"
+                    >
+                      Time & Work
+                    </div>
+                    <div class="font-mono text-sm text-indigo-600 mt-1">
+                      Total Work = LCM(Days)
+                    </div>
+                    <div class="text-xs text-slate-500">
+                      Efficiency = Work / Days
+                    </div>
+                  </div>
+                  <div
+                    class="bg-white p-3 rounded border border-slate-200 shadow-sm"
+                  >
+                    <div
+                      class="text-xs font-bold text-slate-400 uppercase tracking-wider"
+                    >
+                      Speed
+                    </div>
+                    <div class="font-mono text-sm text-indigo-600 mt-1">
+                      km/hr -> m/s : Multiply by 5/18
+                    </div>
+                  </div>
+                  <div
+                    class="bg-white p-3 rounded border border-slate-200 shadow-sm"
+                  >
+                    <div
+                      class="text-xs font-bold text-slate-400 uppercase tracking-wider"
+                    >
+                      Averages
+                    </div>
+                    <div class="font-mono text-sm text-indigo-600 mt-1">
+                      New Avg = Old + (Diff / Total)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Trap Alerts -->
+            <div class="bg-rose-50 border border-rose-200 rounded-lg p-6 mb-8">
+              <h3 class="text-xl font-bold text-rose-800 mb-4">
+                ⚠️ Critical Trap Alerts
+              </h3>
+              <div class="space-y-3">
+                <div class="flex items-start">
+                  <span class="text-rose-500 mr-2">➤</span>
+                  <p class="text-sm text-rose-900">
+                    <strong>% Increase vs Decrease:</strong> If Price +20%,
+                    Consumption must -16.66% (NOT 20%).
+                  </p>
+                </div>
+                <div class="flex items-start">
+                  <span class="text-rose-500 mr-2">➤</span>
+                  <p class="text-sm text-rose-900">
+                    <strong>Trains:</strong> When crossing a platform, distance
+                    = Train Length + Platform Length. Don't forget the platform!
+                  </p>
+                </div>
+                <div class="flex items-start">
+                  <span class="text-rose-500 mr-2">➤</span>
+                  <p class="text-sm text-rose-900">
+                    <strong>Work Remaining:</strong> Read carefully: "Total
+                    Days" vs "Remaining Days".
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Day 2 Trap Quiz -->
+            <div
+              class="mt-8 bg-slate-50 p-6 rounded-lg border border-slate-200"
+            >
+              <h3 class="text-xl font-bold text-slate-800 mb-4">
+                🧠 Trap-Based MCQ Challenge
+              </h3>
+              <div id="day2-quiz-container" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 3: Web Basics -->
+        <div id="day3-view" class="view-section hidden fade-in space-y-8">
+          <div
+            class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8"
+          >
+            <div class="flex items-center space-x-3 mb-6">
+              <span
+                class="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide"
+                >Day 3</span
+              >
+              <h2 class="text-3xl font-bold text-slate-800">
+                Web Basics (Deep Dive)
+              </h2>
+            </div>
+
+            <!-- Analogy Header -->
+            <div class="grid grid-cols-3 gap-4 mb-8 text-center">
+              <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                <div class="text-2xl mb-1">🦴</div>
+                <div class="font-bold text-slate-700">HTML</div>
+                <div class="text-xs text-slate-500">Structure</div>
+              </div>
+              <div class="p-4 bg-pink-50 rounded-lg border border-pink-200">
+                <div class="text-2xl mb-1">🎨</div>
+                <div class="font-bold text-pink-700">CSS</div>
+                <div class="text-xs text-pink-500">Presentation</div>
+              </div>
+              <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                <div class="text-2xl mb-1">🧠</div>
+                <div class="font-bold text-yellow-700">JS</div>
+                <div class="text-xs text-yellow-600">Logic</div>
+              </div>
+            </div>
+
+            <!-- HTML Tag Dictionary -->
+            <div class="mb-8">
+              <h3 class="text-xl font-bold text-slate-800 mb-4">
+                HTML Tag Dictionary (Memorize for MCQs)
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="border rounded p-3 hover:bg-slate-50">
+                  <code class="bg-blue-100 text-blue-800 px-1 rounded"
+                    >&lt;a&gt;</code
+                  >
+                  <span class="text-sm ml-2"
+                    >Anchor tag for links. Attribute:
+                    <strong>href</strong>.</span
+                  >
+                </div>
+                <div class="border rounded p-3 hover:bg-slate-50">
+                  <code class="bg-blue-100 text-blue-800 px-1 rounded"
+                    >&lt;img&gt;</code
+                  >
+                  <span class="text-sm ml-2"
+                    >Image tag. Self-closing. Attribute:
+                    <strong>src</strong>.</span
+                  >
+                </div>
+                <div class="border rounded p-3 hover:bg-slate-50">
+                  <code class="bg-blue-100 text-blue-800 px-1 rounded"
+                    >&lt;ul&gt;/&lt;ol&gt;</code
+                  >
+                  <span class="text-sm ml-2"
+                    >Unordered/Ordered Lists. Items use
+                    <code>&lt;li&gt;</code>.</span
+                  >
+                </div>
+                <div class="border rounded p-3 hover:bg-slate-50">
+                  <code class="bg-blue-100 text-blue-800 px-1 rounded"
+                    >&lt;br&gt;</code
+                  >
+                  <span class="text-sm ml-2">Line Break. Self-closing.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CSS Box Model Visualizer -->
+            <div class="mb-8">
+              <h3 class="text-xl font-bold text-slate-800 mb-4">
+                The CSS Box Model
+              </h3>
+              <p class="text-sm text-slate-600 mb-4">
+                Understanding the order (Content -> Padding -> Border -> Margin)
+                is critical.
+              </p>
+
+              <div
+                class="flex justify-center py-6 bg-slate-100 rounded-xl overflow-hidden"
+              >
+                <div
+                  class="box-model-demo bg-orange-200 p-8 border-2 border-dashed border-orange-400 relative"
+                >
+                  <span
+                    class="absolute top-1 left-1 text-[10px] font-bold text-orange-700"
+                    >MARGIN</span
+                  >
+                  <div class="bg-yellow-200 p-1 border-4 border-black relative">
+                    <span
+                      class="absolute -top-6 left-1 text-[10px] font-bold text-black"
+                      >BORDER</span
+                    >
+                    <div class="bg-green-200 p-8 relative">
+                      <span
+                        class="absolute top-1 left-1 text-[10px] font-bold text-green-700"
+                        >PADDING</span
+                      >
+                      <div
+                        class="bg-blue-200 h-16 w-32 flex items-center justify-center text-blue-800 font-bold text-sm shadow-sm"
+                      >
+                        CONTENT
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- JS Basics & Traps -->
+            <h3 class="text-xl font-bold text-slate-800 mb-4">
+              JavaScript Traps
+            </h3>
+            <div
+              class="bg-yellow-50 border-l-4 border-yellow-400 p-4 space-y-3 mb-8"
+            >
+              <div>
+                <span class="font-bold text-yellow-900">1. "5" + 2 = "52"</span>
+                <p class="text-sm text-yellow-800">
+                  String concatenation wins over addition.
+                </p>
+              </div>
+              <div>
+                <span class="font-bold text-yellow-900">2. "5" - 2 = 3</span>
+                <p class="text-sm text-yellow-800">
+                  Subtraction coerces string to number.
+                </p>
+              </div>
+              <div>
+                <span class="font-bold text-yellow-900">3. == vs ===</span>
+                <p class="text-sm text-yellow-800">
+                  == checks value. === checks value AND type.
+                </p>
+              </div>
+            </div>
+
+            <!-- Day 3 Quiz -->
+            <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+              <h3 class="text-xl font-bold text-slate-800 mb-4">
+                Web MCQ Drill
+              </h3>
+              <div id="day3-quiz-container" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 4: HR & Comm -->
+        <div id="day4-view" class="view-section hidden fade-in space-y-8">
+          <div
+            class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8"
+          >
+            <div class="flex items-center space-x-3 mb-6">
+              <span
+                class="bg-purple-100 text-purple-700 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide"
+                >Day 4</span
+              >
+              <h2 class="text-3xl font-bold text-slate-800">
+                HR Strategy & STAR Method
+              </h2>
+            </div>
+
+            <!-- STAR Method Interactive -->
+            <div class="mb-8">
+              <h3 class="text-xl font-bold text-slate-800 mb-4">
+                Behavioral Questions: The STAR Method
+              </h3>
+              <p class="text-sm text-slate-600 mb-4">
+                Use this structure for "Tell me about a time..." questions.
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+                <div class="bg-purple-50 p-4 rounded border border-purple-200">
+                  <div class="text-2xl font-bold text-purple-600 mb-1">S</div>
+                  <div class="font-bold text-purple-900 text-sm">Situation</div>
+                  <div class="text-xs text-purple-700 mt-1">
+                    "During my final year project..."
+                  </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded border border-purple-200">
+                  <div class="text-2xl font-bold text-purple-600 mb-1">T</div>
+                  <div class="font-bold text-purple-900 text-sm">Task</div>
+                  <div class="text-xs text-purple-700 mt-1">
+                    "We had to fix a database error..."
+                  </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded border border-purple-200">
+                  <div class="text-2xl font-bold text-purple-600 mb-1">A</div>
+                  <div class="font-bold text-purple-900 text-sm">Action</div>
+                  <div class="text-xs text-purple-700 mt-1">
+                    "I debugged the code using logs..."
+                  </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded border border-purple-200">
+                  <div class="text-2xl font-bold text-purple-600 mb-1">R</div>
+                  <div class="font-bold text-purple-900 text-sm">Result</div>
+                  <div class="text-xs text-purple-700 mt-1">
+                    "The app ran successfully."
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- High Risk Traps -->
+            <h3 class="text-xl font-bold text-slate-800 mb-4">
+              High-Risk HR Traps 🚩
+            </h3>
+            <div class="space-y-4">
+              <div
+                class="group bg-white border p-4 rounded-lg shadow-sm hover:border-red-300 transition cursor-pointer"
+              >
+                <div class="font-bold text-red-600 mb-1">
+                  "Why should we NOT hire you?"
+                </div>
+                <div class="text-sm text-slate-600">
+                  Safe Answer: "If you need an expert immediately, I may not
+                  fit. But for a fresher eager to learn, I am the right choice."
+                </div>
+              </div>
+              <div
+                class="group bg-white border p-4 rounded-lg shadow-sm hover:border-red-300 transition cursor-pointer"
+              >
+                <div class="font-bold text-red-600 mb-1">
+                  "What if you get a higher salary elsewhere?"
+                </div>
+                <div class="text-sm text-slate-600">
+                  Safe Answer: "For my first job, learning and training are more
+                  important than salary. I prefer your company's growth path."
+                </div>
+              </div>
+              <div
+                class="group bg-white border p-4 rounded-lg shadow-sm hover:border-red-300 transition cursor-pointer"
+              >
+                <div class="font-bold text-red-600 mb-1">
+                  "Do you have any backlogs?"
+                </div>
+                <div class="text-sm text-slate-600">
+                  Safe Answer: Be Honest. "No." OR "Yes, I have one, but I am
+                  working hard to clear it."
+                </div>
+              </div>
+            </div>
+
+            <!-- Panic Recovery -->
+            <div
+              class="mt-8 bg-amber-50 p-6 rounded-lg border border-amber-200"
+            >
+              <h3 class="text-lg font-bold text-amber-800 mb-2">
+                😰 Panic-Recovery Sentences
+              </h3>
+              <ul
+                class="list-disc list-inside text-sm text-amber-900 italic space-y-1"
+              >
+                <li>"May I take a few seconds to think about that?"</li>
+                <li>
+                  "I am a little nervous, but I will try my best to answer."
+                </li>
+                <li>"Could you please rephrase that question for me?"</li>
+                <li>
+                  "I don't know the technical term, but I can explain the
+                  logic."
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 5: Final Strategy -->
+        <div id="day5-view" class="view-section hidden fade-in space-y-8">
+          <div
+            class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8"
+          >
+            <div class="flex items-center space-x-3 mb-6">
+              <span
+                class="bg-slate-800 text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wide"
+                >Day 5</span
+              >
+              <h2 class="text-3xl font-bold text-slate-800">
+                Final Test Day Strategy
+              </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+              <!-- Left Col -->
+              <div class="md:col-span-2 space-y-8">
+                <!-- Emergency Plan -->
+                <div
+                  class="bg-red-50 p-6 rounded-lg border-l-4 border-red-500 shadow-sm"
+                >
+                  <h3
+                    class="text-xl font-bold text-red-700 mb-4 flex items-center"
+                  >
+                    🚨 15-Minute Emergency Rescue Plan
+                  </h3>
+                  <div class="space-y-4 text-red-900">
+                    <div class="flex gap-3">
+                      <div
+                        class="bg-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-red-500 flex-shrink-0"
+                      >
+                        1
+                      </div>
+                      <p>
+                        <strong>Panic Control:</strong> Stop reading
+                        immediately. Drink water. Close your eyes for 60
+                        seconds.
+                      </p>
+                    </div>
+                    <div class="flex gap-3">
+                      <div
+                        class="bg-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-red-500 flex-shrink-0"
+                      >
+                        2
+                      </div>
+                      <p>
+                        <strong>Revise ONLY:</strong> Your Self-Introduction and
+                        the Aptitude Formula Cheat Sheet.
+                      </p>
+                    </div>
+                    <div class="flex gap-3">
+                      <div
+                        class="bg-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-red-500 flex-shrink-0"
+                      >
+                        3
+                      </div>
+                      <p>
+                        <strong>IGNORE:</strong> Complex coding questions and
+                        notes you made a month ago.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Mental Scripts -->
+                <div
+                  class="bg-indigo-50 p-6 rounded-lg border border-indigo-200"
+                >
+                  <h3 class="text-lg font-bold text-indigo-800 mb-4">
+                    🧠 Mental Scripts (Repeat These)
+                  </h3>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div
+                      class="bg-white p-2 rounded text-sm text-center text-indigo-700 shadow-sm"
+                    >
+                      "I only need to do my best."
+                    </div>
+                    <div
+                      class="bg-white p-2 rounded text-sm text-center text-indigo-700 shadow-sm"
+                    >
+                      "One question at a time."
+                    </div>
+                    <div
+                      class="bg-white p-2 rounded text-sm text-center text-indigo-700 shadow-sm"
+                    >
+                      "I am excited, not scared."
+                    </div>
+                    <div
+                      class="bg-white p-2 rounded text-sm text-center text-indigo-700 shadow-sm"
+                    >
+                      "I trust my preparation."
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Col -->
+              <div class="space-y-6">
+                <!-- Revision Plan Chart -->
+                <div
+                  class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm"
+                >
+                  <h3 class="text-sm font-bold text-slate-700 mb-2 text-center">
+                    2-Hour Rapid Revision
+                  </h3>
+                  <div class="chart-container" style="height: 200px">
+                    <canvas id="revisionPlanChart"></canvas>
+                  </div>
+                </div>
+
+                <!-- Checklists -->
+                <div class="bg-white p-4 rounded-lg border border-slate-200">
+                  <h3 class="font-bold text-slate-700 mb-3 border-b pb-2">
+                    Night-Before
+                  </h3>
+                  <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-center">
+                      <input type="checkbox" class="mr-2 accent-indigo-600" />
+                      Admit Card (2 Copies)
+                    </li>
+                    <li class="flex items-center">
+                      <input type="checkbox" class="mr-2 accent-indigo-600" />
+                      ID Proof
+                    </li>
+                    <li class="flex items-center">
+                      <input type="checkbox" class="mr-2 accent-indigo-600" /> 2
+                      Pens (Blue/Black)
+                    </li>
+                    <li class="flex items-center">
+                      <input type="checkbox" class="mr-2 accent-indigo-600" />
+                      Sleep by 10:30 PM
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // --- Navigation Logic ---
+      function navTo(dayId) {
+        document
+          .querySelectorAll(".view-section")
+          .forEach((el) => el.classList.add("hidden"));
+        document.getElementById(dayId + "-view").classList.remove("hidden");
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.classList.remove("bg-indigo-50", "text-indigo-700");
+          btn
+            .querySelector("span:last-child")
+            .classList.remove("bg-indigo-500");
+        });
+        const activeBtn = document.getElementById("btn-" + dayId);
+        if (activeBtn) {
+          activeBtn.classList.add("bg-indigo-50", "text-indigo-700");
+          activeBtn
+            .querySelector("span:last-child")
+            .classList.add("bg-indigo-500");
+        }
+        window.scrollTo(0, 0);
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      // --- Charts ---
+      const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+      };
+
+      const ctxDay1 = document.getElementById("javaDataTypesChart");
+      if (ctxDay1) {
+        new Chart(ctxDay1, {
+          type: "bar",
+          data: {
+            labels: ["byte", "short", "int", "long"],
+            datasets: [
+              {
+                label: "Bytes",
+                data: [1, 2, 4, 8],
+                backgroundColor: ["#818cf8", "#6366f1", "#4f46e5", "#312e81"],
+                borderRadius: 4,
+              },
+            ],
+          },
+          options: {
+            ...commonOptions,
+            scales: {
+              y: { beginAtZero: true, title: { display: true, text: "Bytes" } },
+            },
+          },
+        });
+      }
+
+      const ctxDay2 = document.getElementById("aptitudePriorityChart");
+      if (ctxDay2) {
+        new Chart(ctxDay2, {
+          type: "doughnut",
+          data: {
+            labels: [
+              "Percentages (High)",
+              "Time & Work (High)",
+              "Ratios (Med)",
+              "Probability (Low)",
+            ],
+            datasets: [
+              {
+                data: [35, 35, 20, 10],
+                backgroundColor: ["#10b981", "#059669", "#f59e0b", "#f43f5e"],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: { boxWidth: 10, font: { size: 10 } },
+              },
+            },
+          },
+        });
+      }
+
+      const ctxDay5 = document.getElementById("revisionPlanChart");
+      if (ctxDay5) {
+        new Chart(ctxDay5, {
+          type: "pie",
+          data: {
+            labels: ["Tech", "Aptitude", "Web", "HR"],
+            datasets: [
+              {
+                data: [30, 30, 30, 30],
+                backgroundColor: ["#6366f1", "#10b981", "#f59e0b", "#8b5cf6"],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: "bottom", labels: { boxWidth: 10 } },
+            },
+          },
+        });
+      }
+
+      // --- Quizzes ---
+      const day1Questions = [
+        {
+          q: "Which component converts bytecode to machine code?",
+          options: ["JDK", "JVM", "JRE"],
+          correct: 1,
+        },
+        {
+          q: "What is the size of an int?",
+          options: ["2 bytes", "4 bytes", "8 bytes"],
+          correct: 1,
+        },
+        {
+          q: "Which concept implies 'Data Hiding'?",
+          options: ["Inheritance", "Encapsulation", "Polymorphism"],
+          correct: 1,
+        },
+        {
+          q: "Default value of a local variable?",
+          options: ["0", "null", "No default (Error)"],
+          correct: 2,
+        },
+        {
+          q: "Which access modifier is Package Private?",
+          options: ["public", "private", "default"],
+          correct: 2,
+        },
+      ];
+
+      const day2Questions = [
+        {
+          q: "Price increases by 20%. Reduction to keep expense same?",
+          options: ["20% (Trap)", "25%", "16.66%"],
+          correct: 2,
+        },
+        {
+          q: "A & B work 2 days. A leaves. B finishes remaining. What is asked?",
+          options: ["Total Days", "Remaining Days", "A's Days"],
+          correct: 1,
+        },
+        {
+          q: "Train A (100m in 10s) vs Train B (100m+Platform in 20s). Faster?",
+          options: ["Train A", "Train B", "Both Same (Trap)"],
+          correct: 2,
+        },
+        {
+          q: "Syllogism: Some Cats are Dogs. Some Dogs are Rats. Cats are Rats?",
+          options: ["True", "False", "Maybe (Trap)"],
+          correct: 1,
+        },
+      ];
+
+      const day3Questions = [
+        {
+          q: "Tag for hyperlink?",
+          options: ["<link>", "<url>", "<a>"],
+          correct: 2,
+        },
+        {
+          q: "Attribute for image path?",
+          options: ["href", "src", "path"],
+          correct: 1,
+        },
+        {
+          q: "Largest Heading?",
+          options: ["<h6>", "<head>", "<h1>"],
+          correct: 2,
+        },
+        {
+          q: "Is JavaScript the same as Java?",
+          options: ["Yes", "No", "Yes, but lighter"],
+          correct: 1,
+        },
+        {
+          q: "Correct CSS for text color?",
+          options: ["text-color", "font-color", "color"],
+          correct: 2,
+        },
+        {
+          q: "Box Model transparent area?",
+          options: ["Padding", "Margin", "Content"],
+          correct: 1,
+        },
+      ];
+
+      function renderQuiz(containerId, questions) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        container.innerHTML = questions
+          .map(
+            (item, idx) => `
+                <div class="border rounded p-3 bg-white shadow-sm">
+                    <p class="font-semibold text-sm mb-2 text-slate-700">${
+                      idx + 1
+                    }. ${item.q}</p>
+                    <div class="space-y-1">
+                        ${item.options
+                          .map(
+                            (opt, optIdx) => `
+                            <button onclick="checkAnswer(this, ${
+                              item.correct === optIdx
+                            })" class="w-full text-left text-sm px-3 py-2 border rounded hover:bg-slate-50 transition text-slate-600">
+                                ${opt}
+                            </button>
+                        `
+                          )
+                          .join("")}
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      function checkAnswer(btn, isCorrect) {
+        const parent = btn.parentElement;
+        const buttons = parent.querySelectorAll("button");
+        buttons.forEach((b) => {
+          b.disabled = true;
+          b.classList.add("opacity-50", "cursor-not-allowed");
+        });
+
+        btn.classList.remove("opacity-50");
+        if (isCorrect) {
+          btn.classList.add(
+            "bg-emerald-100",
+            "border-emerald-500",
+            "text-emerald-800"
+          );
+          btn.innerHTML += " ✅";
+        } else {
+          btn.classList.add("bg-red-100", "border-red-500", "text-red-800");
+          btn.innerHTML += " ❌";
+        }
+      }
+
+      renderQuiz("day1-quiz-container", day1Questions);
+      renderQuiz("day2-quiz-container", day2Questions);
+      renderQuiz("day3-quiz-container", day3Questions);
+    </script>
+  </body>
+</html>
