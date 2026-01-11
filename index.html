@@ -1117,26 +1117,36 @@
           q: "Which component converts bytecode to machine code?",
           options: ["JDK", "JVM", "JRE"],
           correct: 1,
+          explanation:
+            "The <strong>JVM (Java Virtual Machine)</strong> interprets the bytecode for the specific OS. The JDK includes tools, and JRE includes libraries to run code.",
         },
         {
           q: "What is the size of an int?",
           options: ["2 bytes", "4 bytes", "8 bytes"],
           correct: 1,
+          explanation:
+            "In Java, an <strong>int is always 4 bytes</strong> (32 bits), unlike C++ where it varies by platform.",
         },
         {
           q: "Which concept implies 'Data Hiding'?",
           options: ["Inheritance", "Encapsulation", "Polymorphism"],
           correct: 1,
+          explanation:
+            "<strong>Encapsulation</strong> wraps data (variables) and code together, restricting direct access to the data.",
         },
         {
           q: "Default value of a local variable?",
           options: ["0", "null", "No default (Error)"],
           correct: 2,
+          explanation:
+            "Local variables in Java <strong>must be initialized</strong> before use. They do not get a default value.",
         },
         {
           q: "Which access modifier is Package Private?",
           options: ["public", "private", "default"],
           correct: 2,
+          explanation:
+            "If no modifier is specified (<strong>default</strong>), the member is accessible only within the same package.",
         },
       ];
 
@@ -1145,21 +1155,29 @@
           q: "Price increases by 20%. Reduction to keep expense same?",
           options: ["20% (Trap)", "25%", "16.66%"],
           correct: 2,
+          explanation:
+            "Use the formula: <code>R / (100 + R) * 100</code>. So, 20/120 * 100 = 16.66%.",
         },
         {
           q: "A & B work 2 days. A leaves. B finishes remaining. What is asked?",
           options: ["Total Days", "Remaining Days", "A's Days"],
           correct: 1,
+          explanation:
+            "The question specifically asks for the time taken by B to finish the <strong>remaining</strong> work, not the total project duration.",
         },
         {
           q: "Train A (100m in 10s) vs Train B (100m+Platform in 20s). Faster?",
           options: ["Train A", "Train B", "Both Same (Trap)"],
           correct: 2,
+          explanation:
+            "<strong>Train A:</strong> 100m/10s = 10m/s. <br><strong>Train B:</strong> (100+100)m/20s = 200/20 = 10m/s. <br>Both speeds are identical.",
         },
         {
           q: "Syllogism: Some Cats are Dogs. Some Dogs are Rats. Cats are Rats?",
           options: ["True", "False", "Maybe (Trap)"],
           correct: 1,
+          explanation:
+            "There is <strong>no direct relationship</strong> established between Cats and Rats. We cannot conclude they are related.",
         },
       ];
 
@@ -1168,86 +1186,147 @@
           q: "Tag for hyperlink?",
           options: ["<link>", "<url>", "<a>"],
           correct: 2,
+          explanation:
+            "The <code>&lt;a&gt;</code> (Anchor) tag defines a hyperlink. <code>&lt;link&gt;</code> is for linking external resources like CSS.",
         },
         {
           q: "Attribute for image path?",
           options: ["href", "src", "path"],
           correct: 1,
+          explanation:
+            "The <strong>src</strong> (source) attribute specifies the path to the image.",
         },
         {
           q: "Largest Heading?",
           options: ["<h6>", "<head>", "<h1>"],
           correct: 2,
+          explanation:
+            "<strong>&lt;h1&gt;</strong> is the largest heading, and &lt;h6&gt; is the smallest.",
         },
         {
           q: "Is JavaScript the same as Java?",
           options: ["Yes", "No", "Yes, but lighter"],
           correct: 1,
+          explanation:
+            "<strong>No.</strong> Java is a compiled OOP language. JavaScript is an interpreted scripting language. They are unrelated.",
         },
         {
           q: "Correct CSS for text color?",
           options: ["text-color", "font-color", "color"],
           correct: 2,
+          explanation:
+            "The correct property is simply <strong>color</strong>. 'font-color' and 'text-color' do not exist in standard CSS.",
         },
         {
           q: "Box Model transparent area?",
           options: ["Padding", "Margin", "Content"],
           correct: 1,
+          explanation:
+            "The <strong>Margin</strong> is the space outside the border and is always transparent.",
         },
       ];
+
+      // Store quiz data globally for reset functionality
+      window.quizData = {
+        "day1-quiz-container": day1Questions,
+        "day2-quiz-container": day2Questions,
+        "day3-quiz-container": day3Questions,
+      };
 
       function renderQuiz(containerId, questions) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        container.innerHTML = questions
+        let html = questions
           .map(
             (item, idx) => `
-                <div class="border rounded p-3 bg-white shadow-sm">
+                <div class="quiz-item border rounded p-3 bg-white shadow-sm" id="${containerId}-q${idx}">
                     <p class="font-semibold text-sm mb-2 text-slate-700">${
                       idx + 1
                     }. ${item.q}</p>
-                    <div class="space-y-1">
+                    <div class="space-y-1 options-container">
                         ${item.options
                           .map(
                             (opt, optIdx) => `
-                            <button onclick="checkAnswer(this, ${
-                              item.correct === optIdx
-                            })" class="w-full text-left text-sm px-3 py-2 border rounded hover:bg-slate-50 transition text-slate-600">
+                            <button onclick="checkAnswer('${containerId}', ${idx}, ${optIdx})" class="w-full text-left text-sm px-3 py-2 border rounded hover:bg-slate-50 transition text-slate-600">
                                 ${opt}
                             </button>
                         `
                           )
                           .join("")}
                     </div>
+                    <div id="${containerId}-explanation-${idx}" class="hidden mt-3 p-3 rounded-md text-sm"></div>
                 </div>
             `
           )
           .join("");
+
+        // Add Reset Button
+        html += `
+                <div class="text-center mt-6">
+                    <button onclick="renderQuiz('${containerId}', window.quizData['${containerId}'])" class="px-6 py-2 bg-indigo-50 text-indigo-600 rounded-full hover:bg-indigo-100 transition text-sm font-bold border border-indigo-200">
+                        ↺ Reset Quiz
+                    </button>
+                </div>
+            `;
+
+        container.innerHTML = html;
       }
 
-      function checkAnswer(btn, isCorrect) {
-        const parent = btn.parentElement;
-        const buttons = parent.querySelectorAll("button");
-        buttons.forEach((b) => {
-          b.disabled = true;
-          b.classList.add("opacity-50", "cursor-not-allowed");
+      function checkAnswer(containerId, qIdx, optIdx) {
+        const questions = window.quizData[containerId];
+        const item = questions[qIdx];
+        const isCorrect = item.correct === optIdx;
+
+        const questionDiv = document.getElementById(`${containerId}-q${qIdx}`);
+        const buttons = questionDiv.querySelectorAll("button");
+        const explDiv = document.getElementById(
+          `${containerId}-explanation-${qIdx}`
+        );
+
+        // Disable buttons and apply styles
+        buttons.forEach((btn, idx) => {
+          btn.disabled = true;
+          btn.classList.add("cursor-not-allowed", "opacity-60");
+
+          // Highlight logic
+          if (idx === item.correct) {
+            btn.classList.add(
+              "bg-emerald-100",
+              "border-emerald-500",
+              "text-emerald-800"
+            );
+            if (!btn.innerHTML.includes("✅")) btn.innerHTML += " ✅";
+          } else if (idx === optIdx && !isCorrect) {
+            btn.classList.add("bg-red-100", "border-red-500", "text-red-800");
+            btn.innerHTML += " ❌";
+          }
         });
 
-        btn.classList.remove("opacity-50");
+        // Show Explanation
+        explDiv.classList.remove("hidden");
         if (isCorrect) {
-          btn.classList.add(
-            "bg-emerald-100",
-            "border-emerald-500",
-            "text-emerald-800"
+          explDiv.classList.add(
+            "bg-emerald-50",
+            "text-emerald-800",
+            "border",
+            "border-emerald-200"
           );
-          btn.innerHTML += " ✅";
+          explDiv.innerHTML = `<strong>Correct!</strong> ${item.explanation}`;
         } else {
-          btn.classList.add("bg-red-100", "border-red-500", "text-red-800");
-          btn.innerHTML += " ❌";
+          explDiv.classList.add(
+            "bg-red-50",
+            "text-red-800",
+            "border",
+            "border-red-200"
+          );
+          explDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer is <em>${
+            item.options[item.correct]
+          }</em>.<br><br>${item.explanation}`;
         }
       }
 
+      // Initialize Quizzes
       renderQuiz("day1-quiz-container", day1Questions);
       renderQuiz("day2-quiz-container", day2Questions);
       renderQuiz("day3-quiz-container", day3Questions);
